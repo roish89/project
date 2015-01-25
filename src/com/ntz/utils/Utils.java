@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
 
+import javax.management.MXBean;
 import javax.swing.JFrame;
-
 
 import com.ntz.data_structure.AHCGraph;
 import com.ntz.data_structure.Edge;
@@ -254,16 +254,47 @@ public class Utils {
 		return M;
 	}
 
+	
+	//----------------------------------------------------------------------plot
+	
+	
+	
 	public static void plot(SparseVector v , String name){
 		ArrayList<Double> list = new ArrayList<Double>(); 
-		double factor = (norm(v) < 0.01) ? 1000 : (norm(v) > 100) ? 1.0/1000 : 6;
+		double factor =(norm(v) < 0.01) ? 1000 : (norm(v) > 100) ? 1.0/1000 : 6;
 		double[] varr = v.toArray();
-		System.out.println();
-		System.out.println("Final vector:");
-		for(int i=0; i<varr.length;i++){
-			list.add(varr[i]*factor);
-			System.out.println(varr[i]*factor);
+		double result,error=0,average=0;
+		//System.out.println("--------------------------Utils:plot----------------------");
+				
+		//System.out.println("Final vector:");
+		
+		
+		for(int i=0; i<varr.length;i++)
+		{
+			result=varr[i]*factor;
+			list.add(result);
+			//System.out.println(result);
+			average+=result;
+			
 		}
+		
+		average=average/varr.length;
+		//System.out.println("average: "+average);
+		
+		
+		for(int i=0; i<varr.length;i++)
+		{
+			result=varr[i]*factor;
+			result=result-average;
+			error+=Math.pow(result, 2);
+		}
+		
+		System.out.println("error: "+error);
+	/*	double q2=	1.8660443781999702E-8;  
+		double q1=7.451973964011452E-4;
+		System.out.println(q1-q2);*/
+		/*
+		 
 		DrawGraph mainPanel = new DrawGraph(list, norm(v));
 
 		JFrame frame = new JFrame(name);
@@ -272,6 +303,9 @@ public class Utils {
 		frame.pack();
 		frame.setLocationByPlatform(true);
 		frame.setVisible(true);
+		
+		*/
+		//System.out.println("--------------------------/Utils:plot----------------------");
 	}
 
 	public static boolean hasZeroRows(SparseMatrix A){

@@ -9,12 +9,10 @@ import com.ntz.utils.Utils;
 
 /**
  * This class performs V-Cycle
- * @author Noam Tzumie
- *
  */
 public class Cycle {
 
-	private int numOfCycles = 10; //By default
+	private int numOfCycles = 1; //By default
 
 	HierarchyGrids hierarchyGrids;
 
@@ -27,11 +25,11 @@ public class Cycle {
 		this.hierarchyGrids = HierarchyGrids.getInstance();
 	}
 
-	public void perform(){
+	public void perform(int num){
 		Diagnostic.startCycleWatch();
-		
+		numOfCycles=num;
 		for(int i=0;i<numOfCycles;i++) {
-			vcycle();
+			  vcycle();
 			if(i<numOfCycles-1){//TODO: Cycle: Re-factor this block
 				Grid temp = new Grid(hierarchyGrids.getGrid(0).A);
 				temp.v = hierarchyGrids.getGrid(0).v;
@@ -39,6 +37,7 @@ public class Cycle {
 				hierarchyGrids.clear();
 				hierarchyGrids.addGrid(temp);
 			}
+			
 		}
 		
 		Diagnostic.afterNorm = hierarchyGrids.getFinestGrid().v.norm();

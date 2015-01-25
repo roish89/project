@@ -21,6 +21,7 @@ public class SparseVector {
     public SparseVector(int N) {
         this.N  = N;
         this.st = new ST<Integer, Double>();
+       
     }
 
     // put st[i] = value
@@ -129,9 +130,13 @@ public class SparseVector {
     }
 
     public double[] toArray(){
-    	double[] res = new double[N]; 
+    	
+    	double[] res = new double[N];
+   
     	for(int i : st)
+    	{
     		res[i] = st.get(i);
+    	}
     	return res;
     }
 

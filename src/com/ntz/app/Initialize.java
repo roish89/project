@@ -9,8 +9,6 @@ import com.ntz.utils.Diagnostic;
 
 /**
  * This initializer prepare the components of AMG algorithm
- * @author Noam Tzumie
- *
  */
 public class Initialize {
 	
@@ -24,25 +22,24 @@ public class Initialize {
 		
 		HierarchyGrids hierarchyGrids = HierarchyGrids.getInstance();
 	
-		SparseMatrix S = ahcGraph.getMatrix();
-		//System.out.println(S);   ///////////////////////////////////
+		SparseMatrix S = ahcGraph.getMatrix();		
 		Grid grid = new Grid(S);
-		//grid.print();
 		int N = S.size();
+		
 	
 		grid.v = new SparseVector(N);
 		grid.f = new SparseVector(N);
 		
 		
-
-		System.out.println("Guess vector:");
+//----------------------------------------------------------Guess vector
+		//System.out.println("Guess vector:");
 		for(int i=1; i<=N; i++)
 		{
 			double  val = (Math.sin(i*32*Math.PI/N) + Math.sin(i*6*Math.PI/N) + Math.sin(i*Math.PI/N)) * 1.0/3;
 			grid.v.put(i-1, val);
-			System.out.println(val);
+			//System.out.println(val);
 		}
-
+//----------------------------------------------------------Guess vector
 		hierarchyGrids.addGrid(grid);
 		
 		Diagnostic.numOfNodes = N;

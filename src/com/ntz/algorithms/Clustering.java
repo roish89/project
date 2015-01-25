@@ -15,8 +15,6 @@ import com.ntz.utils.Diagnostic;
 /**
  * This class take the results of the AMG and produce clusters
  * from two grids (this done only for the 2 first grids for now). 
- * @author Noam Tzumie
- *
  */
 public class Clustering {
 
@@ -30,16 +28,17 @@ public class Clustering {
 		Diagnostic.startClusterWatch();
 		int[][] matrix = matrix();
 
-		for(int i=0; i<matrix[0].length+1; i++)
-			System.out.print("c"+(i+1) + ((i<matrix[0].length)?",":""));
-		System.out.println();
+		//for(int i=0; i<matrix[0].length+1; i++)
+			//System.out.print("c"+(i+1) + ((i<matrix[0].length)?",":""));
+			//System.out.println();
+		
 		for(int i=0; i<matrix.length; i++){
-			System.out.print((i+1)+",");
+			//System.out.print((i+1)+",");
 			for(int j=0; j<matrix[0].length; j++)
 			{
-				System.out.print((matrix[i][j]+1) + ((j<matrix[0].length-1)?",":""));
+				//System.out.print((matrix[i][j]+1) + ((j<matrix[0].length-1)?",":""));
 			}
-			System.out.println();
+			//System.out.println();
 		}
 			
 //		csv();		

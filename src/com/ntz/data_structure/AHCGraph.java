@@ -5,9 +5,6 @@ import com.ntz.utils.Diagnostic.LogLevel;
 
 /**
  * AHCGraph is a class that represent an AMG Hierarchical Clustering Graph
- *  
- * @author Noam Tzumie
- *
  */
 public class AHCGraph {
 	
