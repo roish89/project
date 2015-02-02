@@ -6,31 +6,32 @@ import java.io.FileReader;
 public class Owl {
 
 	public static void main(String[] args) {
-		
-		
+		System.out.println(args[0]);
+		Neighbors neig = new Neighbors();
+		String[] parts;
+		String line;
+
 		try(BufferedReader br = new BufferedReader(new FileReader(args[0]))) 
 		{
 
-			String line=br.readLine();
-
+			line=br.readLine();
+			
 
 			while (line != null) 
 			{
+				if((!line.equals("null")) && !(line.contains("#")) )
+				{
+					neig.addId(line);
+					System.out.println(line);
+				}
+
 				line=br.readLine();
 				if(line==null)
 					break;
 
-
-				if(!line.equals("null"))
-				{
-					System.out.println(line);
-				}
-
-
 			}
-
-
-
+			
+			br.close();
 
 		}
 
@@ -42,4 +43,8 @@ public class Owl {
 
 	}
 
+	
+
 }
+
+
