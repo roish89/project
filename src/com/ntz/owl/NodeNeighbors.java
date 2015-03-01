@@ -2,10 +2,10 @@ package com.ntz.owl;
 
 public class NodeNeighbors {
 
-	String id;
+	int id;
 	String neighbors;
 	
-	public NodeNeighbors(String id)
+	public NodeNeighbors(int id)
 	{
 		this.id=id;
 	}

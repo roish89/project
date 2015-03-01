@@ -1,55 +1,190 @@
 package com.ntz.owl;
 
-import Node2;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.LinkedList;
+
+
 
 public class Neighbors {
 	String [] idArr;
-	
-	public void addId(String id)
+	LinkedList<NodeNeighbors> list=new LinkedList<NodeNeighbors>();
+	Hashtable<Integer,LinkedList<NodeNeighbors>> hashX = new Hashtable<Integer,LinkedList<NodeNeighbors>>(); 
+	Hashtable<Integer,Integer> hashY = new Hashtable<Integer,Integer>();
+	Writer writer;
+	public int counter=0;
+
+	public Neighbors()
 	{
-		for (int i = 0; i < idArr.length; i++)
+		try
 		{
-			if(!idArr[i].equals(id))
-			{
-				idArr[idArr.length]=id;
-			}
+			writer= new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:\\Users\\roi\\Desktop\\project\\aaa\\Neighbors.txt"), "utf-8"));
+
+		}
+
+		catch(Exception e)
+		{
+			System.err.println("error: constructor");
 		}
 	}
-	
-	public void printArr()
+
+	public void addIdToHash(int idX,int idY)
 	{
-		for (int i = 0; i < idArr.length; i++)
-		{
-			System.out.println(idArr[i]);
+
+		if(isThereX(idX)==false)
+		{		
+			list=new LinkedList<NodeNeighbors>();
+			list.add(new NodeNeighbors(counter));
+			list.add(new NodeNeighbors(idX));
+			hashX.put(idX, list);
+			counter++;
 		}
+
 	}
-	
-	public void toList(String lineXml)
+
+	public boolean isThereX(int id)
 	{
-		String type,symbol="",temp;
+
+		if(hashX.containsKey(id))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isThereY(int id)
+	{
+
+		if(hashY.containsValue(id))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+
+	public void printHash()
+	{ 
+		Enumeration items = hashX.keys();
+		while(items.hasMoreElements())
+			System.out.println(items.nextElement());
+	}
+
+	public void parserToHash(String line)
+	{
+		String x,y,temp;
 		String[] parts;
-		parts =lineXml.split(" ");
-		type=parts[0];
-		parts=type.split("<");
-		type=parts[1];
-		parts=type.split(">");
-		type=parts[0];
-		
-		if(!(type.equals("tokens")||type.equals("/tokens")))
+		parts =line.split("\\s+");
+		x=parts[0];
+		y=parts[1];
+
+		//writerTofile(x,y);
+
+		addIdToHash(Integer.parseInt(x),Integer.parseInt(y));
+
+	}
+
+
+	//-------------------------------------------------------- 2
+
+
+	public void parserToVal(String line)
+	{
+		String x,y,temp;
+		String[] parts;
+		parts =line.split("\\s+");
+		x=parts[0];
+		y=parts[1];
+
+		//writerTofile(x,y);
+
+		addNeighbors(Integer.parseInt(x),Integer.parseInt(y));
+
+	}
+	public void addNeighbors(int idX,int idY)
+	{
+
+		if(isThereX(idX)==true)
+		{	
+			hashX.get(idX).add(new NodeNeighbors(idY));
+		}
+
+	}
+
+	public void printListNeihbors()
+	{
+
+		for( int key : hashX.keySet() ) {
+			for( int i=0; i < hashX.get(key).size(); i++)
 			{
-				parts =lineXml.split(">");
-				symbol=parts[1];
-				parts =symbol.split("<");
-				symbol=parts[0];
-				//symbol=symbol.trim();
-				//System.out.println(type+":"+symbol);
-				symbol=symbol.substring(1, symbol.length()-1);
-				list.add(new Node2(symbol,type));
+				
+				System.out.print("=>"+hashX.get(key).get(i).id);
+			}
+			System.out.println("");
+			
+		}
+		
+		
+	}
+	public void WriteNeihbors()
+	{
+
+		for( int key : hashX.keySet() ) {
+			for( int i=0; i < hashX.get(key).size(); i++)
+			{
+				writerTofile("=>"+hashX.get(key).get(i).id);
+			
 			}
 		
-			
+			writerTofile("\n");
+		}
+		
+		close();
 	}
-	
-	
-	
+	public void writerTofile(String x)
+	{
+		try 
+		{
+			writer.write(x);
+			writer.flush();
+		} 
+		catch(Exception e)
+		{
+			System.err.println("error: writerTofile ");
+		}
+	}
+
+	public void close()
+	{
+		try 
+		{
+			writer.close();	
+		}
+		catch (IOException e) 
+		{	
+			e.printStackTrace();
+		}
+	}
 }
+
+
+
+
+//------------------------------------------------------------------------------------------------------	
+
+
+
+
+
+
+
+
+

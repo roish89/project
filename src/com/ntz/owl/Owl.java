@@ -6,23 +6,21 @@ import java.io.FileReader;
 public class Owl {
 
 	public static void main(String[] args) {
-		System.out.println(args[0]);
 		Neighbors neig = new Neighbors();
 		String[] parts;
 		String line;
+		BuildMatrix matrix;
 
 		try(BufferedReader br = new BufferedReader(new FileReader(args[0]))) 
 		{
 
 			line=br.readLine();
-			
 
 			while (line != null) 
 			{
 				if((!line.equals("null")) && !(line.contains("#")) )
 				{
-					neig.addId(line);
-					System.out.println(line);
+					neig.parserToHash(line);
 				}
 
 				line=br.readLine();
@@ -30,7 +28,7 @@ public class Owl {
 					break;
 
 			}
-			
+
 			br.close();
 
 		}
@@ -39,11 +37,49 @@ public class Owl {
 		{
 			System.out.println("error");
 		}
+	
+		matrix= new BuildMatrix(neig.counter);
+		//System.out.println(neig.counter);
+		//---------------------------------------------------------------
 
+		try(BufferedReader br = new BufferedReader(new FileReader(args[0]))) 
+		{
 
+			line=br.readLine();
+
+			while (line != null) 
+			{
+				if((!line.equals("null")) && !(line.contains("#")) )
+				{
+					neig.parserToVal(line);
+				}
+
+				line=br.readLine();
+				if(line==null)
+					break;
+
+			}
+
+			br.close();
+
+		}
+
+		catch(Exception e)
+		{
+			System.out.println("error");
+		}
+		
+		neig.WriteNeihbors();
+		matrix.convertHashToMatrix(neig.hashX);
+		matrix.writeMatrixToFile();
+		//matrix.printListNeihbors(hashX);
 	}
 
-	
+
+
+
+
+
 
 }
 

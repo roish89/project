@@ -18,8 +18,8 @@ public class Application {
 
 		String fileName = "resources/MI7";
 
-		int N=100;
-		int numOfVCycle=1;
+		int N=3;
+		int numOfVCycle=10;
 
 
 
