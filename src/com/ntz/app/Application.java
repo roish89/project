@@ -1,5 +1,6 @@
 package com.ntz.app;
 
+import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 
 import com.ntz.algorithms.Clustering;
@@ -11,22 +12,22 @@ public class Application {
 	
 	
 	
-	public static void main(int[][] matrix){
+	public static void main(Hashtable<Integer,Hashtable<Integer,Integer>> hash){
 		Diagnostic.startAppWatch();
-		int N=matrix.length;
+		int N=hash.size();
 		
 		//Convert general graph to AHCGraph
 		long startTime = System.nanoTime();    
 		String fileName = "resources/MI7";	
 		
-		int numOfVCycle=1;
+		int numOfVCycle=2;
 		
 		//Convert general graph to AHCGraph
 		//		AHCGraph ahcGraph = AHCGraphGenerator.generateFromCSV(fileName + ".csv");//.generateFromFile("resources/r-graph.stp");//generateFromImage("resources/img.txt");
-		AHCGraph ahcGraph = AHCGraphGenerator.generateLaplaciasize1D(matrix);
+		AHCGraph ahcGraph = AHCGraphGenerator.generateLaplaciasize1D(hash);
 		//		System.out.println(ahcGraph.getMatrix());
 		//--------------------------------------------------------
-		//System.out.println(ahcGraph.size());
+		System.out.println(ahcGraph.size());
 		/*for(int i=0;i<N;i++)
 		{
 			for (int j = 0; j <N; j++) 

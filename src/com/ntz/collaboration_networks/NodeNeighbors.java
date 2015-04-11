@@ -1,4 +1,4 @@
-package com.ntz.owl;
+package com.ntz.collaboration_networks;
 
 public class NodeNeighbors {
 

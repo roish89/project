@@ -1,4 +1,4 @@
-package com.ntz.owl;
+package com.ntz.collaboration_networks;
 import com.ntz.app.Application;
 
 import java.io.BufferedReader;
@@ -73,7 +73,7 @@ public class Owl {
 		neig.WriteNeihbors();
 		matrix.convertHashToMatrix(neig.hashX);
 	//	matrix.writeMatrixToFile();
-		Application.main(matrix.getMatrix());
+	//	Application.main(matrix.getMatrix());
 		
 		//matrix.printListNeihbors(hashX);
 	}

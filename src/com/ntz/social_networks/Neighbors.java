@@ -1,10 +1,10 @@
-package com.ntz.social_circles;
+package com.ntz.social_networks;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
-import com.ntz.owl.NodeNeighbors;
+import com.ntz.collaboration_networks.NodeNeighbors;
 
 public class Neighbors {
 
@@ -42,7 +42,7 @@ public class Neighbors {
 		if(isThereX(idX)==false)
 		{	
 			hashFriends=new Hashtable<Integer,Integer>();
-			hashFriends.put(idX,idX);
+			//hashFriends.put(idX,idX);
 			hashSocial.put(idX, hashFriends);
 		}
 		
@@ -127,6 +127,11 @@ public class Neighbors {
 		Enumeration items = a.keys();
 		while(items.hasMoreElements())
 			System.out.println(items.nextElement());
+	}
+	
+	public Hashtable<Integer,Hashtable<Integer,Integer>> getHash()
+	{
+		return hashSocial;
 	}
 	
 }

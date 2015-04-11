@@ -1,11 +1,11 @@
-package com.ntz.social_circles;
+package com.ntz.social_networks;
 
 import com.ntz.app.Application;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-public class Main  {
+public class SocialMain  {
 
 	public static void main(String[] args) {
 		Neighbors neig = new Neighbors();
@@ -72,7 +72,8 @@ public class Main  {
 			System.out.println("error");
 		}
 
-		neig.printFriendsOfX();
+		//neig.printFriendsOfX();
+		Application.main(neig.getHash());
 	}
 
 

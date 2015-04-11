@@ -1,25 +1,31 @@
 package com.ntz.app;
-import com.ntz.owl.Owl;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
+import com.ntz.collaboration_networks.Owl;
 import com.ntz.data_structure.AHCGraph;
 import com.ntz.utils.Utils;
 
 public class AHCGraphGenerator {
 
-	public static AHCGraph generateLaplaciasize1D(int[][] matrix) {
-		
-		int size=matrix.length;
+	public static AHCGraph generateLaplaciasize1D(Hashtable<Integer,Hashtable<Integer,Integer>> hash) {
+
+		int size=hash.size();
 		AHCGraph graph = new AHCGraph(size);
 		double h=1;//Math.pow(size, 2);
-		
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix.length; j++) {
-				if(matrix[i][j]!=0)
-					graph.addEdge(i, j, matrix[i][j]);
-			}
+
+
+		Hashtable<Integer,Integer> a;
+		for (int i = 0; i < size; i++)
+		{
+			a=hash.get(i);
+			graph.addEdge(i,i, a.size());
+			Enumeration items = a.keys();
+			while(items.hasMoreElements())
+				graph.addEdge(i,(int)items.nextElement(), 1);
 		}
-		
-		
+
+
 		return graph;
 	}
 
@@ -43,6 +49,20 @@ public class AHCGraphGenerator {
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 
+/*  for matrix (int[][])
+	int size=matrix.length;
+		AHCGraph graph = new AHCGraph(size);
+		double h=1;//Math.pow(size, 2);
+
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix.length; j++) {
+				if(matrix[i][j]!=0)
+					graph.addEdge(i, j, matrix[i][j]);
+			}
+		}
+
+
+ */
 /*
 graph.addEdge(0, 0, 4*h);
 graph.addEdge(0, 1, -1*h);
@@ -86,7 +106,7 @@ for(int i=0;i<size; i++)
 		right=i+N;
 		right= right-size;
 		graph.addEdge(i, right , -1*h);
-		
+
 		if((i-N)<0)
 		{
 			left=Math.abs(i-N);
@@ -112,7 +132,7 @@ for(int i=0;i<size; i++)
 
 return graph;
 }
-*/
+ */
 /*
 graph.addEdge(0, 0, 2*h);
 		graph.addEdge(0, 1, -1*h);
