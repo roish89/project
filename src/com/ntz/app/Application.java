@@ -8,28 +8,33 @@ import com.ntz.data_structure.AHCGraph;
 import com.ntz.utils.Diagnostic;
 
 public class Application {
-
-	public static void main(String[] args){
+	
+	
+	
+	public static void main(int[][] matrix){
 		Diagnostic.startAppWatch();
+		int N=matrix.length;
+		
 		//Convert general graph to AHCGraph
-
 		long startTime = System.nanoTime();    
-
-
-		String fileName = "resources/MI7";
-
-		int N=3;
-		int numOfVCycle=10;
-
-
-
-
+		String fileName = "resources/MI7";	
+		
+		int numOfVCycle=1;
+		
 		//Convert general graph to AHCGraph
 		//		AHCGraph ahcGraph = AHCGraphGenerator.generateFromCSV(fileName + ".csv");//.generateFromFile("resources/r-graph.stp");//generateFromImage("resources/img.txt");
-		AHCGraph ahcGraph = AHCGraphGenerator.generateLaplaciasize1D(N);
+		AHCGraph ahcGraph = AHCGraphGenerator.generateLaplaciasize1D(matrix);
 		//		System.out.println(ahcGraph.getMatrix());
 		//--------------------------------------------------------
-	
+		//System.out.println(ahcGraph.size());
+		/*for(int i=0;i<N;i++)
+		{
+			for (int j = 0; j <N; j++) 
+			{
+				System.out.print(ahcGraph.getEdge(i, j)+" ");
+			}
+			System.out.println("");
+		}*/
 		
 		//Initialize graph data for AMG
 		Initialize initializer = new Initialize(ahcGraph);

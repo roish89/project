@@ -67,10 +67,10 @@ public class BuildMatrix {
 			for (int j = 0; j < matrix.length; j++) 
 			{
 				writerTofile(Integer.toString(matrix[i][j])+" ");
-				System.out.print(matrix[i][j]+" ");
+				//System.out.print(matrix[i][j]+" ");
 			}
 			writerTofile("\n");
-			System.out.println("");
+			//System.out.println("");
 		}
 	}
 
@@ -100,7 +100,10 @@ public class BuildMatrix {
 			e.printStackTrace();
 		}
 	}
-	
+	public int[][] getMatrix()
+	{
+		return matrix;
+	}
 	
 	
 }

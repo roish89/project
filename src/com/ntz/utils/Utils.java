@@ -268,12 +268,13 @@ public class Utils {
 				
 		//System.out.println("Final vector:");
 		
-		
 		for(int i=0; i<varr.length;i++)
 		{
-			result=varr[i]*factor;
+			if(i==100)
+			break;
+			result=varr[i]*factor;	
 			list.add(result);
-			//System.out.println(result);
+			
 			average+=result;
 			
 		}
@@ -284,19 +285,17 @@ public class Utils {
 		
 		for(int i=0; i<varr.length;i++)
 		{
+			if(i==100)
+			break;
 			result=varr[i]*factor;
 			result=result-average;
 			error+=Math.pow(result, 2);
 		}
 		
 		System.out.println("error: "+error);
-	/*	double q2=	1.8660443781999702E-8;  
-		double q1=7.451973964011452E-4;
-		System.out.println(q1-q2);*/
-		/*
-		 
+	
+	/*	 
 		DrawGraph mainPanel = new DrawGraph(list, norm(v));
-
 		JFrame frame = new JFrame(name);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(mainPanel);

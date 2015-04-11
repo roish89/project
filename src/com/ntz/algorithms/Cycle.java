@@ -46,12 +46,11 @@ public class Cycle {
 
 	public void vcycle(){
 		boolean moreWork =true;
-		for(int i=0; moreWork; i++) {
+		for(int i=0;i<2; i++) {//moreWork
 			Grid mGrid = hierarchyGrids.getGrid(i);
-
 			relaxation.relax(mGrid, 2); //relaxation
 			amg.start(mGrid);
-
+			System.out.println(i);
 			mGrid.residual = mGrid.f.minus(mGrid.A.times(mGrid.v));//compute residual r = f - Av
 
 			Grid mGrid2 = new Grid(mGrid.A2h);
