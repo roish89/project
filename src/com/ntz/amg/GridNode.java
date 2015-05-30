@@ -30,6 +30,8 @@ public class GridNode implements Comparable<GridNode>{
 		St = new HashMap<Integer, GridNode>();
 		Dependence = new HashMap<Integer, Double>();
 	}
+	
+	
 
 	public void addToNi(GridNode gp){
 		Ni.put(gp.id, gp);
@@ -80,9 +82,13 @@ public class GridNode implements Comparable<GridNode>{
 		C(1),
 		F(2);
 		private int value;
+		
 		private NodeType (int value) {
 			this.value = value;
 		}
+		
+		
+		
 		public int getValue() {
 			return value;
 		}

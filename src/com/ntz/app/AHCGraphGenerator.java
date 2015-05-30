@@ -2,7 +2,7 @@ package com.ntz.app;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import com.ntz.collaboration_networks.Owl;
+import com.ntz.collaboration_networks.CollaborationMain;
 import com.ntz.data_structure.AHCGraph;
 import com.ntz.utils.Utils;
 
@@ -12,7 +12,7 @@ public class AHCGraphGenerator {
 
 		int size=hash.size();
 		AHCGraph graph = new AHCGraph(size);
-		double h=1;//Math.pow(size, 2);
+		double h=Math.pow(size, 2);
 
 
 		Hashtable<Integer,Integer> a;
@@ -22,7 +22,7 @@ public class AHCGraphGenerator {
 			graph.addEdge(i,i, a.size());
 			Enumeration items = a.keys();
 			while(items.hasMoreElements())
-				graph.addEdge(i,(int)items.nextElement(), 1);
+				graph.addEdge(i,(int)items.nextElement(), -1);
 		}
 
 

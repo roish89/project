@@ -1,22 +1,20 @@
-package com.ntz.social_networks;
+package com.ntz.enron_email_network;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.LinkedList;
 
 public class Neighbors {
 
-	Hashtable<Integer,Hashtable<Integer,Integer>> hashSocial;
-	Hashtable<Integer,Integer> hashFriends;
 	
+	Hashtable<Integer,Hashtable<Integer,Integer>> hashCollaboration;
+	Hashtable<Integer,Integer> hashFriends;
 	
 	public Neighbors()
 	{
 		
-		 hashSocial =new Hashtable<Integer,Hashtable<Integer,Integer>>();
+		 hashCollaboration =new Hashtable<Integer,Hashtable<Integer,Integer>>();
 		
 	}
-	
 	
 	public void parserToAddID(String line)
 	{
@@ -26,9 +24,6 @@ public class Neighbors {
 			parts =line.split("\\s+");
 			x=parts[0];
 			y=parts[1];
-
-			
-			//writerTofile(x,y);
 
 			addIdToHash(Integer.parseInt(x),Integer.parseInt(y));
 		
@@ -40,19 +35,10 @@ public class Neighbors {
 		if(isThereX(idX)==false)
 		{	
 			hashFriends=new Hashtable<Integer,Integer>();
-			//hashFriends.put(idX,idX);
-			hashSocial.put(idX, hashFriends);
+			hashCollaboration.put(idX, hashFriends);
 		}
 		
-		if(isThereY(idY)==false)
-		{
-			hashFriends=new Hashtable<Integer,Integer>();
-			//hashFriends.put(idY,idY);
-			hashSocial.put(idY, hashFriends);
-		}
-
 	}
-	
 	
 	public void parserToAddFriend(String line)
 	{
@@ -62,9 +48,6 @@ public class Neighbors {
 		x=parts[0];
 		y=parts[1];
 
-		
-		//writerTofile(x,y);
-
 		addFriend(Integer.parseInt(x),Integer.parseInt(y));
 	}
 	
@@ -72,34 +55,19 @@ public class Neighbors {
 	{
 		if(isThereX(idX))
 		{
-			if(hashSocial.get(idX).containsKey(idY)==false)
+			if(hashCollaboration.get(idX).containsKey(idY)==false)
 			{
-				hashSocial.get(idX).put(idY, idY);
+				hashCollaboration.get(idX).put(idY, idY);
 			}
 		}
 		
-		if(isThereY(idY))
-		{
-			if(hashSocial.get(idY).containsKey(idX)==false)
-			{
-				hashSocial.get(idY).put(idX, idX);
-			}
-		}
 		
-	}
-	
-	
-	public void printHash()
-	{ 
-		Enumeration items = hashSocial.keys();
-		while(items.hasMoreElements())
-			System.out.println(items.nextElement());
 	}
 	
 	public boolean isThereX(int idX)
 	{
 
-		if(hashSocial.containsKey(idX))
+		if(hashCollaboration.containsKey(idX))
 		{
 			return true;
 		}
@@ -110,7 +78,7 @@ public class Neighbors {
 	public boolean isThereY(int idY)
 	{
 
-		if(hashSocial.containsKey(idY))
+		if(hashCollaboration.containsKey(idY))
 		{
 			return true;
 		}
@@ -121,7 +89,7 @@ public class Neighbors {
 	public void printFriendsOfX()
 	{
 		Hashtable<Integer,Integer> a;
-		a=hashSocial.get(0);
+		a=hashCollaboration.get(1);
 		Enumeration items = a.keys();
 		while(items.hasMoreElements())
 			System.out.println(items.nextElement());
@@ -129,7 +97,13 @@ public class Neighbors {
 	
 	public Hashtable<Integer,Hashtable<Integer,Integer>> getHash()
 	{
-		return hashSocial;
+		return hashCollaboration;
 	}
 	
+	public void printHash()
+	{ 
+		Enumeration items = hashCollaboration.keys();
+		while(items.hasMoreElements())
+			System.out.println(items.nextElement());
+	}
 }

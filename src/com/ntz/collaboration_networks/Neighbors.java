@@ -1,190 +1,116 @@
 package com.ntz.collaboration_networks;
 
-
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.LinkedList;
-
-
 
 public class Neighbors {
-	String [] idArr;
-	LinkedList<NodeNeighbors> list=new LinkedList<NodeNeighbors>();
-	Hashtable<Integer,LinkedList<NodeNeighbors>> hashX = new Hashtable<Integer,LinkedList<NodeNeighbors>>(); 
-	Hashtable<Integer,Integer> hashY = new Hashtable<Integer,Integer>();
-	Writer writer;
-	public int counter=0;
-
+	
+	Hashtable<Integer,Hashtable<Integer,Integer>> hashCollaboration;
+	Hashtable<Integer,Integer> hashFriends;
+	
 	public Neighbors()
 	{
-		try
-		{
-			writer= new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:\\Users\\roi\\Desktop\\project\\aaa\\Neighbors.txt"), "utf-8"));
-
-		}
-
-		catch(Exception e)
-		{
-			System.err.println("error: constructor");
-		}
+		
+		 hashCollaboration =new Hashtable<Integer,Hashtable<Integer,Integer>>();
+		
 	}
+	
+	public void parserToAddID(String line)
+	{
+		
+			String x,y,temp;
+			String[] parts;
+			parts =line.split("\\s+");
+			x=parts[0];
+			y=parts[1];
 
+			
+			//writerTofile(x,y);
+
+			addIdToHash(Integer.parseInt(x),Integer.parseInt(y));
+		
+	}
+	
+	
 	public void addIdToHash(int idX,int idY)
 	{
 
 		if(isThereX(idX)==false)
-		{		
-			list=new LinkedList<NodeNeighbors>();
-			list.add(new NodeNeighbors(counter));
-			list.add(new NodeNeighbors(idX));
-			hashX.put(idX, list);
-			counter++;
+		{	
+			hashFriends=new Hashtable<Integer,Integer>();
+			hashCollaboration.put(idX, hashFriends);
 		}
-
+		
 	}
-
-	public boolean isThereX(int id)
+	
+	public void parserToAddFriend(String line)
 	{
+		String x,y,temp;
+		String[] parts;
+		parts =line.split("\\s+");
+		x=parts[0];
+		y=parts[1];
 
-		if(hashX.containsKey(id))
-		{
-			return true;
-		}
-
-		return false;
+		addFriend(Integer.parseInt(x),Integer.parseInt(y));
 	}
-
-	public boolean isThereY(int id)
+	
+	public void addFriend(int idX,int idY)
 	{
-
-		if(hashY.containsValue(id))
+		if(isThereX(idX))
 		{
-			return true;
+			if(hashCollaboration.get(idX).containsKey(idY)==false)
+			{
+				hashCollaboration.get(idX).put(idY, idY);
+			}
 		}
-
-		return false;
+		
+		
 	}
-
-
+	
+	
 	public void printHash()
 	{ 
-		Enumeration items = hashX.keys();
+		Enumeration items = hashCollaboration.keys();
 		while(items.hasMoreElements())
 			System.out.println(items.nextElement());
 	}
-
-	public void parserToHash(String line)
-	{
-		String x,y,temp;
-		String[] parts;
-		parts =line.split("\\s+");
-		x=parts[0];
-		y=parts[1];
-
-		//writerTofile(x,y);
-
-		addIdToHash(Integer.parseInt(x),Integer.parseInt(y));
-
-	}
-
-
-	//-------------------------------------------------------- 2
-
-
-	public void parserToVal(String line)
-	{
-		String x,y,temp;
-		String[] parts;
-		parts =line.split("\\s+");
-		x=parts[0];
-		y=parts[1];
-
-		//writerTofile(x,y);
-
-		addNeighbors(Integer.parseInt(x),Integer.parseInt(y));
-
-	}
-	public void addNeighbors(int idX,int idY)
+	
+	public boolean isThereX(int idX)
 	{
 
-		if(isThereX(idX)==true)
-		{	
-			hashX.get(idX).add(new NodeNeighbors(idY));
-		}
-
-	}
-
-	public void printListNeihbors()
-	{
-
-		for( int key : hashX.keySet() ) {
-			for( int i=0; i < hashX.get(key).size(); i++)
-			{
-				
-				System.out.print("=>"+hashX.get(key).get(i).id);
-			}
-			System.out.println("");
-			
-		}
-		
-		
-	}
-	public void WriteNeihbors()
-	{
-
-		for( int key : hashX.keySet() ) {
-			for( int i=0; i < hashX.get(key).size(); i++)
-			{
-				writerTofile("=>"+hashX.get(key).get(i).id);
-			
-			}
-		
-			writerTofile("\n");
-		}
-		
-		close();
-	}
-	public void writerTofile(String x)
-	{
-		try 
+		if(hashCollaboration.containsKey(idX))
 		{
-			writer.write(x);
-			writer.flush();
-		} 
-		catch(Exception e)
-		{
-			System.err.println("error: writerTofile ");
+			return true;
 		}
-	}
 
-	public void close()
-	{
-		try 
-		{
-			writer.close();	
-		}
-		catch (IOException e) 
-		{	
-			e.printStackTrace();
-		}
+		return false;
 	}
+	
+	public boolean isThereY(int idY)
+	{
+
+		if(hashCollaboration.containsKey(idY))
+		{
+			return true;
+		}
+
+		return false;
+	}
+	
+	public void printFriendsOfX()
+	{
+		Hashtable<Integer,Integer> a;
+		a=hashCollaboration.get(1);
+		Enumeration items = a.keys();
+		while(items.hasMoreElements())
+			System.out.println(items.nextElement());
+	}
+	
+	public Hashtable<Integer,Hashtable<Integer,Integer>> getHash()
+	{
+		return hashCollaboration;
+	}
+	
+
+
 }
-
-
-
-
-//------------------------------------------------------------------------------------------------------	
-
-
-
-
-
-
-
-
-

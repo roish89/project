@@ -147,6 +147,36 @@ public class SparseMatrix {
 		}
 		return s;
 	}
+	
+	public int isZeroRows() {
+		int count = 0;
+		for (int i = 0; i < N; i++) {
+			double[] t = rows[i].toArray();
+			boolean isZero=true;
+			for(int j = 0; j < t.length; j++)
+			{
+				if(t[j]!=0)
+					isZero=false;
+			}
+			if(isZero)
+				count++;
+		
+		}	
+		return count;
+	}
+	
+/*	public int isZeroRows() {
+		int count = 0;
+		for (int i = 0; i < N; i++) {
+			double[] t = rows[i].toArray();
+			boolean isZero = true;
+			for(int j = 0; j < t.length; j++) {
+				isZero = isZero && t[j] == 0;
+			}
+			count = isZero ? count+1: count;
+		}	
+		return count;
+	}*/
 
 
 }

@@ -9,37 +9,40 @@ import com.ntz.data_structure.AHCGraph;
 import com.ntz.utils.Diagnostic;
 
 public class Application {
-	
-	
-	
+
+
+
 	public static void main(Hashtable<Integer,Hashtable<Integer,Integer>> hash){
+
 		Diagnostic.startAppWatch();
-		int N=hash.size();
-		
 		//Convert general graph to AHCGraph
 		long startTime = System.nanoTime();    
 		String fileName = "resources/MI7";	
-		
-		int numOfVCycle=2;
-		
+		int N=hash.size();
+		int numOfVCycle=1;
+
 		//Convert general graph to AHCGraph
 		//		AHCGraph ahcGraph = AHCGraphGenerator.generateFromCSV(fileName + ".csv");//.generateFromFile("resources/r-graph.stp");//generateFromImage("resources/img.txt");
 		AHCGraph ahcGraph = AHCGraphGenerator.generateLaplaciasize1D(hash);
+		System.out.println("size of grap: "+ahcGraph.size()+"x"+ahcGraph.size());
 		//		System.out.println(ahcGraph.getMatrix());
 		//--------------------------------------------------------
-		System.out.println(ahcGraph.size());
-		/*for(int i=0;i<N;i++)
+
+
+
+		//Initialize graph data for AMG
+		Initialize initializer = new Initialize(ahcGraph);
+		initializer.perform();
+		
+	/*	int size=N;
+		for(int i=0;i<size;i++)
 		{
-			for (int j = 0; j <N; j++) 
+			for (int j = 0; j <size; j++) 
 			{
 				System.out.print(ahcGraph.getEdge(i, j)+" ");
 			}
 			System.out.println("");
 		}*/
-		
-		//Initialize graph data for AMG
-		Initialize initializer = new Initialize(ahcGraph);
-		initializer.perform();
 
 		//Perform AMG
 		Cycle vCycle = new Cycle();
