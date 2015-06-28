@@ -115,7 +115,7 @@ public class SparseVector {
     
     // return a - b
     public SparseVector minus(SparseVector b) {
-        SparseVector a = this;
+        SparseVector a = this;    
         return a.plus(b.opposite());
     }
 

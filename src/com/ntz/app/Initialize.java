@@ -32,13 +32,22 @@ public class Initialize {
 		
 		
 //----------------------------------------------------------Guess vector
-		//System.out.println("Guess vector:");
+		
 		for(int i=1; i<=N; i++)
 		{
-			double  val = (Math.sin(i*32*Math.PI/N) + Math.sin(i*6*Math.PI/N) + Math.sin(i*Math.PI/N)) * 1.0/3;
+			double  val=(Math.sin((2*i)/N));
+			
+			//double  val=Math.random();
+			//double  val = (Math.sin(i*32*Math.PI/N) + Math.sin(i*6*Math.PI/N) + Math.sin(i*Math.PI/N)) * 1.0/3;
+			
 			grid.v.put(i-1, val);
-			//System.out.println(val);
+			
+			
+			
+		
+			
 		}
+		//System.out.println("Guess vector: "+grid.v);
 //----------------------------------------------------------Guess vector
 		hierarchyGrids.addGrid(grid);
 		

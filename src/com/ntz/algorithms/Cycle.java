@@ -1,5 +1,7 @@
 package com.ntz.algorithms;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 import com.ntz.amg.AMG;
 import com.ntz.amg.Grid;
 import com.ntz.data_structure.HierarchyGrids;
@@ -46,15 +48,25 @@ public class Cycle {
 
 	public void vcycle(){
 		boolean moreWork =true;
-		for(int i=0;moreWork; i++) {//moreWork
+		
+		for(int i=0;i<5; i++) {//moreWork
+			double r=0;	// compute |r|^2
 			Grid mGrid = hierarchyGrids.getGrid(i);
+			mGrid.residual = mGrid.f.minus(mGrid.A.times(mGrid.v));//compute residual r = f - Av	
+			
+			for (int j = 0; j < mGrid.residual.size(); j++) {				
+				r+=Math.pow(mGrid.residual.get(j), 2) ;
+			}
+			
+			System.out.println("in restriction "+i+":  Residual: "+r);
 			relaxation.relax(mGrid, 2); //relaxation
+			
 			amg.start(mGrid);
-			System.out.println(i);	//////syso
-			mGrid.residual = mGrid.f.minus(mGrid.A.times(mGrid.v));//compute residual r = f - Av
-
+			
+			
+			mGrid.printIn();
 			Grid mGrid2 = new Grid(mGrid.A2h);
-
+			//mGrid2.printIn();
 			mGrid2.f = mGrid.restrict(mGrid.residual);//restrict;
 			mGrid2.v = new SparseVector(mGrid2.f.size());
 

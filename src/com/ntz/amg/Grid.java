@@ -2,6 +2,7 @@ package com.ntz.amg;
 
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.ntz.amg.GridNode.NodeType;
@@ -61,6 +62,16 @@ public class Grid {
 		System.out.println();
 	}
 	
+	public void printIn(){
+		for(int i=0; i<nodes.length; i++){
+				GridNode gp = nodes[i];
+				System.out.print((gp.id+1)+gp.value+ " ");
+			if((i+1) % Math.sqrt(nodes.length)==0)
+				System.out.println();
+		}
+		System.out.println();
+	}
+	
 	public double getNorm(){
 		return v.norm();
 	}
@@ -68,4 +79,6 @@ public class Grid {
 	public void plot(){
 		//Utils.plot(v, "Grid");
 	}
+	
 }
+	

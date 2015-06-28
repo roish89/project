@@ -44,7 +44,11 @@ public class SparseMatrix {
 
 	// put A[i][j] = value
 	public void put(int i, int j, double value) {
-		if (i < 0 || i >= N) throw new RuntimeException("Illegal index");
+		if (i < 0 || i >= N) 
+		{
+			System.out.println("Illegal index");
+			throw new RuntimeException("Illegal index");	
+		}
 		if (j < 0 || j >= M) throw new RuntimeException("Illegal index");
 		rows[i].put(j, value);
 		if(willMultiply)  cols[j].put(i, value);
@@ -76,7 +80,10 @@ public class SparseMatrix {
 		if (M != x.size()) throw new RuntimeException("Dimensions disagree");
 		SparseVector b = new SparseVector(N);
 		for (int i = 0; i < N; i++)
+		{
+			
 			b.put(i, A.rows[i].dot(x));
+		}
 		return b;
 	}
 
@@ -155,13 +162,21 @@ public class SparseMatrix {
 			boolean isZero=true;
 			for(int j = 0; j < t.length; j++)
 			{
-				if(t[j]!=0)
+				
+				if(t[j]!=0)	
 					isZero=false;
-			}
+				
+			
+								}
+			
 			if(isZero)
+			{
+				//System.err.println("line of zero: "+i);
 				count++;
+			}
 		
 		}	
+		
 		return count;
 	}
 	

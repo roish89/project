@@ -96,7 +96,7 @@ public class AMG {
 
 			itr = neighbors.Iterator();
 
-			while(itr.hasNext()){
+			while(itr.hasNext()){		//for each neighbors of i
 				Integer i = itr.next();
 				if(i != gn.id){
 					//					Iterator<Integer> itr2 = neighbors.Iterator();
@@ -109,38 +109,8 @@ public class AMG {
 				}
 			}
 		}
-/*
-		for(GridNode sgn : nodes){
-			SparseVector neighbors = A.getRow(sgn.id);
-			Iterator<Integer> itr = neighbors.Iterator();
-			while(itr.hasNext()){
-				Integer j = itr.next();
-
-				if(j!=sgn.id)
-				{
-					if(sgn.S.containsKey(nodes[j]))	//S is the group that strongly impact on j 
-					{
-						if(nodes[j].type == NodeType.C)
-						{
-							sgn.Ci.put(j, nodes[j]);
-						}
-						else
-						{	//F point strongly
-							gn.Dis.put(j, nodes[j]);
-						}
-					}
-					else
-					{
-						gn.Diw.put(j, nodes[j]);
-					}
-				}
-				
-
-
-			}
-		}
-		*/
 		
+
 		classify(A,nodes);
 		Diagnostic.log("Before Second Pass Number Of C's: " + numOfC);
 		//Second pass
@@ -161,17 +131,17 @@ public class AMG {
 		for(GridNode sgn : nodes){
 			if(sgn.type != NodeType.C){
 				ArrayList<Integer> Cit = new ArrayList<Integer>();
-
 				SparseVector neighbors = A.getRow(sgn.id);
 				Iterator<Integer> itr = neighbors.Iterator();
 				while(itr.hasNext()){
 					Integer j= itr.next();
-					if(j != sgn.id && nodes[j].type != NodeType.C && nodes[sgn.id].St.containsKey(j)) {
-						Set<Integer> keysInJ = new HashSet<Integer>(nodes[j].Ci.keySet()); //contains all F points  whit strong connection  
+					
+					if(j != sgn.id && nodes[j].type != NodeType.C && sgn.St.containsKey(j)) {
+						Set<Integer> keysInJ = new HashSet<Integer>(nodes[j].Ci.keySet());   
 						Set<Integer> keysInI = new HashSet<Integer>(sgn.Ci.keySet());
 
 						boolean isChanged = keysInI.retainAll(keysInJ);
-						if(keysInI.size() == 0){ //the cutting of them = empty group  
+						if(keysInI.size() == 0){ //if the cutting of them = empty group  
 							Cit.add(j);
 						}	
 					}
@@ -183,9 +153,7 @@ public class AMG {
 				else if(Cit.size() == 1){ 
 					nodes[Cit.get(0)].type = NodeType.C;
 					nodes[Cit.get(0)].order = numOfC++;
-				} else {
-					//					System.out.println("EMPTY: " + sgn.id);
-				}
+				} 
 			}
 		}
 		return numOfC;
@@ -251,10 +219,12 @@ public class AMG {
 		}
 		itr = Ni.Iterator();
 
-		while(itr.hasNext()){
+		while(itr.hasNext())
+		{
 			int j = itr.next();
 
-			if(j != gn.id){
+			if(j != gn.id)
+			{
 
 
 				if(Math.abs(Ni.get(j)) >= TH*max) 
@@ -271,10 +241,28 @@ public class AMG {
 				else{ // F/C Points weakly connected 
 					gn.Diw.put(j, nodes[j]);
 				}
+	
 			}
 
 			gn.Dependence.put(j,Math.abs(Ni.get(j)));
 		}
+		
+		for (int i = 0; i < nodes.length; i++) {
+			Set<Integer> keysCi = new HashSet<Integer>(nodes[i].Ci.keySet());   
+			Set<Integer> keysDis = new HashSet<Integer>(nodes[i].Dis.keySet());
+			keysDis.retainAll(keysCi);
+			
+			Iterator<Integer> itr2=keysDis.iterator();
+			while(itr2.hasNext()){
+				int j = itr2.next();
+				nodes[i].Dis.remove(j);
+			}
+			
+		}
+		
+		
+		
+		
 	}
 
 	public double computeWeight(GridNode gn, SparseMatrix A){
@@ -296,8 +284,7 @@ public class AMG {
 		double denominator = aii + Dw;
 		double Ds = 0;
 
-		for(int m : gn.Dis.keySet())  //For each F points that strong impact on i
-		{
+		for(int m : gn.Dis.keySet()){  //For each F points that strong impact on i	
 			double Dsnomirator = A.get(gn.id,m)*A.get(m,j);
 			double Dsdenomirator = 0;
 			for(int k : gn.Ci.keySet()){
@@ -323,14 +310,24 @@ public class AMG {
 
 	public SparseMatrix buildInterpolation(GridNode[] nodes, SparseMatrix A, int Nc) {//
 		SparseMatrix I = new SparseMatrix(A.dimensions()[0],Nc,true);
-		for(GridNode gn : nodes){
+		int i=0;
+		for(GridNode gn : nodes){		
 			if(gn.type == NodeType.C){
 				I.put(gn.id,gn.order, 1);
 			}
 			else
-				for(int j : gn.Ci.keySet())
+				for(int j : gn.Ci.keySet()){
+					
 					I.put(gn.id,nodes[j].order ,computeWeight2pt(gn, j, A));
+					
+				}
+			if(gn.type.equals(NodeType.UNASSIGN)){
+					i++;
+					//I.put(gn.id,gn.order, 1);
+				//	gn.type=NodeType.C;
+			}
 		}
+		//System.err.println("Ther are:"+i +" "+"NODE UNASSIGN");
 		return I;
 	}
 
@@ -351,7 +348,7 @@ public class AMG {
 		Diagnostic.startClassifyGridWatch();
 		int numOfC = classifyGrid(g);
 		Diagnostic.endClassifyGridWatch();
-		//classify(g.A, g.nodes);
+		classify(g.A, g.nodes);
 		Diagnostic.log("For A: " + g.A.size() + "x" + g.A.size());
 
 		//Utils.hasZeroRows(g.A);
@@ -359,13 +356,15 @@ public class AMG {
 
 		g.Interpolation = buildInterpolation(g.nodes, g.A, numOfC);
 
-
+		//System.out.println(g.Interpolation.N+"X"+g.Interpolation.M);
 		//System.err.println("Number of zero rows in interpolation operator: " + g.Interpolation.isZeroRows());
 
 		g.Restriction = buildRestriction(g.Interpolation);
 
 		Diagnostic.startRelaxWatch();
 		g.A2h = buildA2h(g.Restriction, g.A, g.Interpolation);
+		
+		
 		Diagnostic.endRelaxWatch();
 
 	}

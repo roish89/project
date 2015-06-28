@@ -8,13 +8,12 @@ import com.ntz.utils.Utils;
 
 public class AHCGraphGenerator {
 
-	public static AHCGraph generateLaplaciasize1D(Hashtable<Integer,Hashtable<Integer,Integer>> hash) {
-
+	public static AHCGraph generateLaplaciasize1D(Hashtable<Integer,Hashtable<Integer,Integer>> hash) {   //Hashtable<Integer,Hashtable<Integer,Integer>> hash
+		
 		int size=hash.size();
 		AHCGraph graph = new AHCGraph(size);
-		double h=Math.pow(size, 2);
-
-
+		double h=1;//Math.pow(size, 2);
+		
 		Hashtable<Integer,Integer> a;
 		for (int i = 0; i < size; i++)
 		{
@@ -24,6 +23,7 @@ public class AHCGraphGenerator {
 			while(items.hasMoreElements())
 				graph.addEdge(i,(int)items.nextElement(), -1);
 		}
+
 
 
 		return graph;
@@ -48,6 +48,29 @@ public class AHCGraphGenerator {
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
+
+/*	
+ * int size=hash.size();
+		AHCGraph graph = new AHCGraph(size);
+		double h=Math.pow(size, 2);
+
+
+		Hashtable<Integer,Integer> a;
+		for (int i = 0; i < size; i++)
+		{
+			a=hash.get(i);
+			graph.addEdge(i,i, a.size());
+			Enumeration items = a.keys();
+			while(items.hasMoreElements())
+				graph.addEdge(i,(int)items.nextElement(), -1);
+		}
+ * 
+ * 
+ */
+
+
+
+
 
 /*  for matrix (int[][])
 	int size=matrix.length;

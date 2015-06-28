@@ -285,11 +285,9 @@ public class Utils {
 		
 		for(int i=0; i<varr.length;i++)
 		{
-			if(i==100)
-			break;
 			result=varr[i]*factor;
 			result=result-average;
-			error+=Math.pow(result, 2);
+			error+=Math.pow(result,2);
 		}
 		
 		System.out.println("error: "+error);

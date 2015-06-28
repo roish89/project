@@ -56,7 +56,7 @@ public class GridNode implements Comparable<GridNode>{
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
-		sb.append("For Point " + id +  " " + type + ":\n");
+		sb.append("For Point " + id +  ", Type " + type + ":\n");
 		sb.append("Ci: ");
 		for(int i: Ci.keySet()){
 			sb.append(" " + i + " (" + Dependence.get(i) + ") ");
@@ -73,7 +73,22 @@ public class GridNode implements Comparable<GridNode>{
 		for(int i: Diw.keySet()){
 			sb.append(" " + i);
 		}
-		sb.append("\n\n\n\n");
+		sb.append("\n");
+		
+		sb.append("St: ");
+		for(int i: St.keySet()){
+			sb.append(" " + i);
+		}
+		
+		sb.append("\n");
+		
+		sb.append("S: ");
+		for(int i: S.keySet()){
+			sb.append(" " + i);
+		}
+		
+		sb.append("\n\n");
+		
 		return sb.toString();
 	}
 	

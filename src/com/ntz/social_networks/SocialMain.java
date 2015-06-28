@@ -2,6 +2,7 @@ package com.ntz.social_networks;
 
 import com.ntz.app.Application;
 import com.ntz.build_matrix.*;
+import com.ntz.dfs.DirectedConnectivityDfs;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,6 +14,7 @@ public class SocialMain  {
 		String[] parts;
 		String line;
 		BuildMatrix matrix=new BuildMatrix();
+		
 	
 		//BuildMatrix matrix;
 
@@ -76,8 +78,9 @@ public class SocialMain  {
 		}
 
 		//neig.printFriendsOfX();
-		Application.main(neig.getHash());
+		//DirectedConnectivityDfs.main(neig.getHash());
 		
+		Application.main(neig.getHash());
 		//matrix.getHash(neig.getHash());
 		
 

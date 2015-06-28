@@ -6,6 +6,7 @@ import java.util.Hashtable;
 
 import com.ntz.app.Application;
 import com.ntz.build_matrix.BuildMatrix;
+import com.ntz.dfs.DirectedConnectivityDfs;
 
 public class CollaborationMain
 {
@@ -140,7 +141,8 @@ public class CollaborationMain
 			}
 
 			//neig.printFriendsOfX();
-			Application.main(neig.getHash());
+			DirectedConnectivityDfs.main(neig.getHash());
+			//Application.main(neig.getHash());
 			//matrix.getHash(neig.getHash());
 			//matrix.symmetricalTest();
 			

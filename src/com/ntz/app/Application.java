@@ -19,13 +19,13 @@ public class Application {
 		long startTime = System.nanoTime();    
 		String fileName = "resources/MI7";	
 		int N=hash.size();
-		int numOfVCycle=1;
+		int numOfVCycle=3;
 
 		//Convert general graph to AHCGraph
-		//		AHCGraph ahcGraph = AHCGraphGenerator.generateFromCSV(fileName + ".csv");//.generateFromFile("resources/r-graph.stp");//generateFromImage("resources/img.txt");
-		AHCGraph ahcGraph = AHCGraphGenerator.generateLaplaciasize1D(hash);
+		
+		AHCGraph ahcGraph = AHCGraphGenerator.generateLaplaciasize1D(hash);//hash
 		System.out.println("size of grap: "+ahcGraph.size()+"x"+ahcGraph.size());
-		//		System.out.println(ahcGraph.getMatrix());
+		
 		//--------------------------------------------------------
 
 
@@ -34,16 +34,33 @@ public class Application {
 		Initialize initializer = new Initialize(ahcGraph);
 		initializer.perform();
 		
-	/*	int size=N;
+		int size=N;
+		boolean isSimetric=true;
+		double aii,aij;
 		for(int i=0;i<size;i++)
 		{
+			 aii=ahcGraph.getEdge(i,i);
+			 aij=0;
 			for (int j = 0; j <size; j++) 
 			{
-				System.out.print(ahcGraph.getEdge(i, j)+" ");
+				
+				if(ahcGraph.getEdge(i,j)!=ahcGraph.getEdge(j,i))
+					isSimetric=false;
+				
+			//	aij+=ahcGraph.getEdge(i,j);
+				
+				//System.out.print(ahcGraph.getEdge(i, j)+" ");
 			}
-			System.out.println("");
-		}*/
-
+			//System.out.println("line:"+i +" "+   aii+" "+aij);
+		/*	if((aij)!=0){
+				System.out.println("line:"+i +" "+   aii+" "+aij);
+				isSimetric=false;
+			}*/
+		}
+		if(isSimetric)System.err.println(" simetric"); else System.err.println("no simetric"); 
+		
+		
+		
 		//Perform AMG
 		Cycle vCycle = new Cycle();
 		vCycle.perform(numOfVCycle);//the parameter is the number of VCycle
