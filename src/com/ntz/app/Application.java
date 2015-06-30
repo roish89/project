@@ -42,7 +42,7 @@ public class Application {
 			 aii=ahcGraph.getEdge(i,i);
 			 aij=0;
 			for (int j = 0; j <size; j++) 
-			{
+			{//sssssssssssssssssssssssssssssssssssssssssssss
 				
 				if(ahcGraph.getEdge(i,j)!=ahcGraph.getEdge(j,i))
 					isSimetric=false;
